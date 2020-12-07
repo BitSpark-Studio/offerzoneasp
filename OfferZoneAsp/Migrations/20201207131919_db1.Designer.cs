@@ -9,7 +9,7 @@ using OfferZoneAsp.Models;
 namespace OfferZoneAsp.Migrations
 {
     [DbContext(typeof(OfferContext))]
-    [Migration("20201207075447_db1")]
+    [Migration("20201207131919_db1")]
     partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

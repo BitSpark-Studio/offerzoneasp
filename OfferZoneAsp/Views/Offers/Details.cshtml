@@ -1,0 +1,117 @@
+﻿@model OfferZoneAsp.Models.Offer
+
+@{
+    ViewData["Title"] = "Details - "+ Html.DisplayFor(model => model.Title);
+}
+
+<!--Section: Block Content-->
+<section class="mb-5">
+
+    <div class="row">
+        <div class="col-md-6 mb-4 mb-md-0">
+
+            <div id="mdb-lightbox-ui"></div>
+
+            <div class="mdb-lightbox">
+
+                <div class="row product-gallery mx-1">
+
+                    <div class="col-12 mb-0">
+                        <figure class="view overlay rounded z-depth-1 main-img">
+                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
+                               data-size="710x823">
+                                <img src="~/OfferImages/@Html.DisplayFor(model => model.OfferImageName)"
+                                     class="img-fluid z-depth-1">
+                            </a>
+                        </figure>
+                        <figure class="view overlay rounded z-depth-1" style="visibility: hidden;">
+                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
+                               data-size="710x823">
+                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
+                                     class="img-fluid z-depth-1">
+                            </a>
+                        </figure>
+                        <figure class="view overlay rounded z-depth-1" style="visibility: hidden;">
+                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
+                               data-size="710x823">
+                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
+                                     class="img-fluid z-depth-1">
+                            </a>
+                        </figure>
+                        <figure class="view overlay rounded z-depth-1" style="visibility: hidden;">
+                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
+                               data-size="710x823">
+                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
+                                     class="img-fluid z-depth-1">
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <h5>@Html.DisplayFor(model => model.Title)</h5>
+            <p class="mb-2 text-muted text-uppercase small">Category Name</p>
+            <ul class="rating">
+                <li>
+                    <i class="fas fa-star fa-sm text-primary"></i>
+                </li>
+                <li>
+                    <i class="fas fa-star fa-sm text-primary"></i>
+                </li>
+                <li>
+                    <i class="fas fa-star fa-sm text-primary"></i>
+                </li>
+                <li>
+                    <i class="fas fa-star fa-sm text-primary"></i>
+                </li>
+                <li>
+                    <i class="far fa-star fa-sm text-primary"></i>
+                </li>
+            </ul>
+            <p><span class="mr-1"><strong>$@Html.DisplayFor(model => model.Price)</strong></span></p>
+            <p class="pt-1">
+                @Html.DisplayFor(model => model.Description)
+            </p>
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                    <tbody>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.CreatedAt)</strong></th>
+                            <td>@Html.DisplayFor(model => model.CreatedAt)</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.ExpiredAt)</strong></th>
+                            <td>@Html.DisplayFor(model => model.ExpiredAt)</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.Location)</strong></th>
+                            <td>@Html.DisplayFor(model => model.Location)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+</section>
+<!--Section: Block Content-->
+
+<script>
+    $(document).ready(function () {
+        // MDB Lightbox Init
+        $(function () {
+            $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
+        });
+    });
+</script>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OfferId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

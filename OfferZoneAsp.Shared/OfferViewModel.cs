@@ -25,30 +25,21 @@ namespace OfferZoneAsp.Shared
         public string Location { get; set; }
         [Display(Name = "Offer Flyer/Image")]
         public IFormFile OfferImageName { get; set; }
-        [Required]
         [Display(Name = "Offer Published At")]
         public DateTime CreatedAt { get; set; }
 
         [Required]
         [Display(Name = "Offer Expiring At")]
         public DateTime ExpiredAt { get; set; }
-
-        [Required]
         [Display(Name = "Offer Updated At")]
         public DateTime UpdatedAt { get; set; }
-
-        [Required]
         [Display(Name = "Facebook Link")]
 
         public string FbLink { get; set; }
-
-        [Required]
         [Display(Name = "Instagram Link")]
         public string InstagramLink { get; set; }
-        [Required]
         [Display(Name = "Twitter Link")]
         public string TwitterLink { get; set; }
-        [Required]
         [Display(Name = "Website Link")]
         public string WebsiteLink { get; set; }
 

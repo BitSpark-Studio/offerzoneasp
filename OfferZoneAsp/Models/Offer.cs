@@ -33,13 +33,6 @@ namespace OfferZoneAsp.Models
         public Category Categories { get; set; }
 
 
-
-        [ForeignKey("SocialLink")]
-        public int SocialLinkId { get; set; }
-        public SocialLink SocialLinks { get; set; }
-
-
-
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
         public ApplicationUser ApplicationUsers { get; set; }

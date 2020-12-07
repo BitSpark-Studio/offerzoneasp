@@ -144,8 +144,8 @@ namespace OfferZoneAsp.Controllers
 
             return View(model);
         }
-
-        public async Task<IActionResult> RegisterUser(VendorRegistrationViewModel model, string ReturnUrl)
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser(UserRegistrationViewModel model, string ReturnUrl)
         {
             //TODO: Make user registration 
             if (ModelState.IsValid)
@@ -184,11 +184,11 @@ namespace OfferZoneAsp.Controllers
                     // context.Add(imageStore);
                     // await context.SaveChangesAsync();
                     //if the use has no role, give them student Role.
-                    if (await roleManager.FindByNameAsync(vendor) == null)
+                    if (await roleManager.FindByNameAsync(gUser) == null)
                     {
-                        await roleManager.CreateAsync(new ApplicationRole(vendor));
+                        await roleManager.CreateAsync(new ApplicationRole(gUser));
                     }
-                    await userManager.AddToRoleAsync(user, vendor);
+                    await userManager.AddToRoleAsync(user, gUser);
 
                     if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
                     {

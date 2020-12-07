@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OfferZoneAsp.Models;
 using OfferZoneAsp.Shared;
 
@@ -12,23 +15,33 @@ namespace OfferZoneAsp.Controllers
 {
     public class OffersController : Controller
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
+
         private readonly OfferContext _context;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public OffersController(OfferContext context, IWebHostEnvironment hostingEnvironment)
+        public OffersController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, RoleManager<ApplicationRole> _roleManager,OfferContext context, IWebHostEnvironment hostingEnvironment)
         {
+            userManager = _userManager;
+            signInManager = _signInManager;
+            roleManager = _roleManager;
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Offers.ToListAsync());
         }
         public IActionResult Create()
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> Create(OfferViewModel model)
         {
+            var currentUser = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             if (ModelState.IsValid)
             {
                 String UploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "OfferImages");
@@ -49,7 +62,9 @@ namespace OfferZoneAsp.Controllers
                     FbLink = model.FbLink,
                     InstagramLink=model.InstagramLink,
                     WebsiteLink=model.WebsiteLink,
-                    CategoryId = model.CategoryId
+                    CategoryId = model.CategoryId,
+                    Id = currentUser.Id
+                    
                 };
                 _context.Add(offermodel);
                 await _context.SaveChangesAsync();
@@ -57,5 +72,105 @@ namespace OfferZoneAsp.Controllers
             }
             return View(model);
         }
+        // GET: Labs/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _context.Offers.FindAsync(id);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+            return View(offer);
+        }
+
+        private bool OfferExists(int id)
+        {
+            return _context.Offers.Any(e => e.OfferId == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Title, Description, Price,Location,ExpiredAt,FbLink,InstagramLink,ContactNumber")] Offer offer)
+        {
+            if (id != offer.OfferId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(offer);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OfferExists(offer.OfferId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(offer);
+        }
+
+        // GET: Offer/Details/1
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _context.Offers
+                .FirstOrDefaultAsync(m => m.OfferId == id);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            return View(offer);
+        }
+
+
+        // GET: offers/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _context.Offers.FirstOrDefaultAsync(m => m.OfferId == id);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            return View(offer);
+        }
+
+        // POST: Offers/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var offer = await _context.Offers.FindAsync(id);
+            _context.Offers.Remove(offer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
