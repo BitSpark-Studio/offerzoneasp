@@ -14,5 +14,8 @@ namespace OfferZoneAsp.Models
         public DbSet<ApplicationRole> ApplicationRoles { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<SocialLink> SocialLinks { get; set; }
+
     }
 }

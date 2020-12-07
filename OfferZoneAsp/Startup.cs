@@ -36,7 +36,7 @@ namespace OfferZoneAsp
                 .AddEntityFrameworkStores<OfferContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";

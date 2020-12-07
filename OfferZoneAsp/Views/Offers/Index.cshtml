@@ -1,8 +1,47 @@
-
+﻿@model IEnumerable<OfferZoneAsp.Models.Offer>
 
 @{
-    ViewBag.Title = " All Offers";
-    Layout = "_Layout";
+    ViewData["Title"] = "All Category";
 }
 
-<h2>title</h2>
+<h1>All Offers</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Card image -->
+                <div class="view overlay">
+                    <img class="card-img-top" src="~/OfferImages/@item.OfferImageName"
+                         alt="Card image cap">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+                    <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h4>
+                    <!-- Text -->
+                    <p class="card-text">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                    <!-- Button -->
+                    <a href="#" class="btn btn-primary">Button</a>
+
+                </div>
+
+            </div>
+            <!-- Card -->
+        </div>
+    }
+</div>
+

@@ -16,10 +16,16 @@ namespace OfferZoneAsp.Models
         public string Price { get; set; }
         
         public string Location { get; set; }
+        public string OfferImageName { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ExpiredAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
+        public string FbLink { get; set; }
+        public string InstagramLink { get; set; }
+        public string TwitterLink { get; set; }
+        public string WebsiteLink { get; set; }
+        public string ContactNumber { get; set; }
 
 
         [ForeignKey("Category")]

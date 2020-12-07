@@ -9,7 +9,7 @@ using OfferZoneAsp.Models;
 namespace OfferZoneAsp.Migrations
 {
     [DbContext(typeof(OfferContext))]
-    [Migration("20201201061253_db1")]
+    [Migration("20201207075447_db1")]
     partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -258,6 +258,9 @@ namespace OfferZoneAsp.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ContactNumber")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
@@ -267,10 +270,19 @@ namespace OfferZoneAsp.Migrations
                     b.Property<DateTime>("ExpiredAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("FbLink")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("InstagramLink")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Location")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OfferImageName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Price")
@@ -282,7 +294,13 @@ namespace OfferZoneAsp.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("TwitterLink")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WebsiteLink")
                         .HasColumnType("TEXT");
 
                     b.HasKey("OfferId");
@@ -294,6 +312,33 @@ namespace OfferZoneAsp.Migrations
                     b.HasIndex("SocialLinkId");
 
                     b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("OfferZoneAsp.Models.Rating", b =>
+                {
+                    b.Property<int>("RatingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ApplicationUsersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("OfferId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Ratings")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("RatingId");
+
+                    b.HasIndex("ApplicationUsersId");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("OfferZoneAsp.Models.SocialLink", b =>
@@ -310,7 +355,7 @@ namespace OfferZoneAsp.Migrations
 
                     b.HasKey("SocialLinkId");
 
-                    b.ToTable("SocialLink");
+                    b.ToTable("SocialLinks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -379,6 +424,19 @@ namespace OfferZoneAsp.Migrations
                     b.HasOne("OfferZoneAsp.Models.SocialLink", "SocialLinks")
                         .WithMany("Offers")
                         .HasForeignKey("SocialLinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("OfferZoneAsp.Models.Rating", b =>
+                {
+                    b.HasOne("OfferZoneAsp.Models.ApplicationUser", "ApplicationUsers")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUsersId");
+
+                    b.HasOne("OfferZoneAsp.Models.Offer", "Offers")
+                        .WithMany()
+                        .HasForeignKey("OfferId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
