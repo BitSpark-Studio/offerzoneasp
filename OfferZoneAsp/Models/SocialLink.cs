@@ -13,7 +13,5 @@ namespace OfferZoneAsp.Models
         public string Link { get; set; }
         public string Platform { get; set; }
 
-        public List<Offer> Offers { get; set; }
-
     }
 }

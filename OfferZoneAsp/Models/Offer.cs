@@ -26,15 +26,7 @@ namespace OfferZoneAsp.Models
         public string TwitterLink { get; set; }
         public string WebsiteLink { get; set; }
         public string ContactNumber { get; set; }
-
-
-        [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        public Category Categories { get; set; }
-
-
-        [ForeignKey("ApplicationUser")]
-        public string Id { get; set; }
-        public ApplicationUser ApplicationUsers { get; set; }
+        public string UserId { get; set; }
     }
 }

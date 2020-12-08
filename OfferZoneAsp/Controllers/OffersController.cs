@@ -63,7 +63,7 @@ namespace OfferZoneAsp.Controllers
                     InstagramLink=model.InstagramLink,
                     WebsiteLink=model.WebsiteLink,
                     CategoryId = model.CategoryId,
-                    Id = currentUser.Id
+                    UserId = currentUser.Id
                     
                 };
                 _context.Add(offermodel);

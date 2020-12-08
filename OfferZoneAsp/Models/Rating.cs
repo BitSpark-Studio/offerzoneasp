@@ -12,14 +12,8 @@ namespace OfferZoneAsp.Models
         [Key]
         public int RatingId { get; set; }
         public double Ratings { get; set; }
-
-        [ForeignKey("Offer")]
         public int OfferId { get; set; }
-        public Offer Offers { get; set; }
-
-        [ForeignKey("ApplicationUser")]
-        public string Id { get; set; }
-        public ApplicationUser ApplicationUsers { get; set; }
+        public string UserId { get; set; }
 
 
 

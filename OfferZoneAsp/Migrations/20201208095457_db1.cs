@@ -66,6 +66,48 @@ namespace OfferZoneAsp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Offers",
+                columns: table => new
+                {
+                    OfferId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Price = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    OfferImageName = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ExpiredAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    FbLink = table.Column<string>(nullable: true),
+                    InstagramLink = table.Column<string>(nullable: true),
+                    TwitterLink = table.Column<string>(nullable: true),
+                    WebsiteLink = table.Column<string>(nullable: true),
+                    ContactNumber = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offers", x => x.OfferId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    RatingId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Ratings = table.Column<double>(nullable: false),
+                    OfferId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.RatingId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SocialLinks",
                 columns: table => new
                 {
@@ -185,81 +227,6 @@ namespace OfferZoneAsp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Offers",
-                columns: table => new
-                {
-                    OfferId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    OfferImageName = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    ExpiredAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    FbLink = table.Column<string>(nullable: true),
-                    InstagramLink = table.Column<string>(nullable: true),
-                    TwitterLink = table.Column<string>(nullable: true),
-                    WebsiteLink = table.Column<string>(nullable: true),
-                    ContactNumber = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
-                    SocialLinkId = table.Column<int>(nullable: false),
-                    Id = table.Column<string>(nullable: true),
-                    ApplicationUsersId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Offers", x => x.OfferId);
-                    table.ForeignKey(
-                        name: "FK_Offers_AspNetUsers_ApplicationUsersId",
-                        column: x => x.ApplicationUsersId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Offers_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Offers_SocialLinks_SocialLinkId",
-                        column: x => x.SocialLinkId,
-                        principalTable: "SocialLinks",
-                        principalColumn: "SocialLinkId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ratings",
-                columns: table => new
-                {
-                    RatingId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Ratings = table.Column<double>(nullable: false),
-                    OfferId = table.Column<int>(nullable: false),
-                    Id = table.Column<string>(nullable: true),
-                    ApplicationUsersId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ratings", x => x.RatingId);
-                    table.ForeignKey(
-                        name: "FK_Ratings_AspNetUsers_ApplicationUsersId",
-                        column: x => x.ApplicationUsersId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Ratings_Offers_OfferId",
-                        column: x => x.OfferId,
-                        principalTable: "Offers",
-                        principalColumn: "OfferId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -296,31 +263,6 @@ namespace OfferZoneAsp.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offers_ApplicationUsersId",
-                table: "Offers",
-                column: "ApplicationUsersId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offers_CategoryId",
-                table: "Offers",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offers_SocialLinkId",
-                table: "Offers",
-                column: "SocialLinkId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ratings_ApplicationUsersId",
-                table: "Ratings",
-                column: "ApplicationUsersId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ratings_OfferId",
-                table: "Ratings",
-                column: "OfferId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -341,22 +283,22 @@ namespace OfferZoneAsp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Ratings");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Ratings");
 
             migrationBuilder.DropTable(
                 name: "SocialLinks");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }
