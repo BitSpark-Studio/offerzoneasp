@@ -78,12 +78,10 @@ namespace OfferZoneAsp.Controllers
             return View(category);
         }
 
-        // POST: Labs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Title")] Category model)
+        public async Task<IActionResult> Edit(int id, [Bind("Title")] Category model)
         {
             if (id != model.CategoryId)
             {

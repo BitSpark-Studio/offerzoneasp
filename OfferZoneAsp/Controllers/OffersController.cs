@@ -61,9 +61,9 @@ namespace OfferZoneAsp.Controllers
                     ExpiredAt=model.ExpiredAt,
                     FbLink = model.FbLink,
                     InstagramLink=model.InstagramLink,
-                    WebsiteLink=model.WebsiteLink,
-                    CategoryId = model.CategoryId,
-                    UserId = currentUser.Id
+                    WebsiteLink=model.WebsiteLink
+                    //CategoryId = model.CategoryId,
+                    //UserId = currentUser.Id
                     
                 };
                 _context.Add(offermodel);
