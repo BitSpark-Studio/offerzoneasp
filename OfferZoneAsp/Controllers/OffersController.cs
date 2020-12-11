@@ -67,7 +67,7 @@ namespace OfferZoneAsp.Controllers
                     
                 };
                 _context.Add(offermodel);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();               
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
