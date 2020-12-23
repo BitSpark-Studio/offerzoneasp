@@ -27,16 +27,21 @@ namespace OfferZoneAsp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //database
             services.AddDbContext<OfferContext>(options =>
             {
                 options.UseSqlite(Configuration.GetConnectionString("DevSqlite"));
             });
+
+            //User Security service
             services.AddIdentity<ApplicationUser, ApplicationRole>(
                     options => options.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<OfferContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
+            //login properties
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
@@ -72,6 +77,7 @@ namespace OfferZoneAsp
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

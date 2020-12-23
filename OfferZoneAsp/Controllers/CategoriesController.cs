@@ -78,21 +78,18 @@ namespace OfferZoneAsp.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
+        // put: Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Title")] Category model)
         {
-            if (id != model.CategoryId)
-            {
-                return NotFound();
-            }
+            var data = _context.Categories.Where(x => x.CategoryId == id).FirstOrDefault();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(model);
+                    data.Title = model.Title;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

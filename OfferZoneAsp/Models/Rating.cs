@@ -15,8 +15,5 @@ namespace OfferZoneAsp.Models
         public int OfferId { get; set; }
         public string UserId { get; set; }
 
-
-
-
     }
 }
