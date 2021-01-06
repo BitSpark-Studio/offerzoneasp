@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<OfferZoneAsp.Models.Offer>
 
 @{
-    ViewData["Title"] = "All Category";
+    ViewData["Title"] = "All Offers";
 }
-
+<br />
+<br />
 <h1>All Offers</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
 </p>
 <div class="row">
     @foreach (var item in Model)
@@ -18,11 +19,8 @@
 
                 <!-- Card image -->
                 <div class="view overlay">
-                    <img class="card-img-top" src="~/OfferImages/@item.OfferImageName"
+                    <img class="card-img-top img-fluid" style="width:500px; height:500px;" src="~/OfferImages/@item.OfferImageName"
                          alt="Card image cap">
-                    <a href="#!">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
                 </div>
 
                 <!-- Card content -->
@@ -30,12 +28,11 @@
 
                     <!-- Title -->
                     <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h4>
-                    <!-- Text -->
-                    <p class="card-text">
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </p>
                     <!-- Button -->
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <a asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.OfferId" class="btn btn-dark">Detail</a>
+                    <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>
+
 
                 </div>
 

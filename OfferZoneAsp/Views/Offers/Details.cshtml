@@ -1,7 +1,7 @@
 ﻿@model OfferZoneAsp.Models.Offer
 
 @{
-    ViewData["Title"] = "Details - "+ Html.DisplayFor(model => model.Title);
+    ViewData["Title"] = "Details - "+ Model.Title;
 }
 
 <!--Section: Block Content-->
@@ -18,30 +18,9 @@
 
                     <div class="col-12 mb-0">
                         <figure class="view overlay rounded z-depth-1 main-img">
-                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
+                            <a href="~/OfferImages/@Html.DisplayFor(model => model.OfferImageName)"
                                data-size="710x823">
-                                <img src="~/OfferImages/@Html.DisplayFor(model => model.OfferImageName)"
-                                     class="img-fluid z-depth-1">
-                            </a>
-                        </figure>
-                        <figure class="view overlay rounded z-depth-1" style="visibility: hidden;">
-                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                               data-size="710x823">
-                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                                     class="img-fluid z-depth-1">
-                            </a>
-                        </figure>
-                        <figure class="view overlay rounded z-depth-1" style="visibility: hidden;">
-                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-                               data-size="710x823">
-                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-                                     class="img-fluid z-depth-1">
-                            </a>
-                        </figure>
-                        <figure class="view overlay rounded z-depth-1" style="visibility: hidden;">
-                            <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
-                               data-size="710x823">
-                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
+                                <img style="width:50%" src="~/OfferImages/@Html.DisplayFor(model => model.OfferImageName)"
                                      class="img-fluid z-depth-1">
                             </a>
                         </figure>
@@ -57,22 +36,14 @@
             <p class="mb-2 text-muted text-uppercase small">Category Name</p>
             <ul class="rating">
                 <li>
-                    <i class="fas fa-star fa-sm text-primary"></i>
-                </li>
-                <li>
-                    <i class="fas fa-star fa-sm text-primary"></i>
-                </li>
-                <li>
-                    <i class="fas fa-star fa-sm text-primary"></i>
-                </li>
-                <li>
-                    <i class="fas fa-star fa-sm text-primary"></i>
-                </li>
-                <li>
+                    <i class="far fa-star fa-sm text-primary"></i>
+                    <i class="far fa-star fa-sm text-primary"></i>
+                    <i class="far fa-star fa-sm text-primary"></i>
                     <i class="far fa-star fa-sm text-primary"></i>
                 </li>
+                
             </ul>
-            <p><span class="mr-1"><strong>$@Html.DisplayFor(model => model.Price)</strong></span></p>
+            <p><span class="mr-1"><strong>TK. @Html.DisplayFor(model => model.Price)</strong></span></p>
             <p class="pt-1">
                 @Html.DisplayFor(model => model.Description)
             </p>
@@ -91,10 +62,46 @@
                             <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.Location)</strong></th>
                             <td>@Html.DisplayFor(model => model.Location)</td>
                         </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.WebsiteLink)</strong></th>
+                            <td>@Html.DisplayFor(model => model.WebsiteLink)</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.FbLink)</strong></th>
+                            <td>@Html.DisplayFor(model => model.FbLink)</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.TwitterLink)</strong></th>
+                            <td>@Html.DisplayFor(model => model.TwitterLink)</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>@Html.DisplayNameFor(model => model.InstagramLink)</strong></th>
+                            <td>@Html.DisplayFor(model => model.InstagramLink)</td>
+                        </tr>
+                        <tr>
+                            <th class="pl-0 w-25" scope="row"><strong>Posted By: </strong></th>
+                            <td>@Html.DisplayFor(model => model.UserId)</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-md-6 col-md-6 col-sm-12">
+            <form action="" id="usrform">
+                <b>Name: </b><input type="text" class="form-control" name="usrname">
+
+                <br>
+                <textarea rows="4" cols="50" class="form-control" name="comment" form="usrform">
+            Enter Comment here...</textarea>
+                <br />
+                
+                <div class="form-group">
+                    <input type="submit" value="Comment" class="btn btn-dark" />
+                </div>
+            </form>
         </div>
     </div>
 

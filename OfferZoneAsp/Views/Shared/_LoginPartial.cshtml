@@ -16,7 +16,10 @@
             @User.Identity.Name
         </li>
         <li class="nav-item">
-            <img class="img-profile rounded-circle" width="50px" height="50px;"  src="~/LogoImage/@currentUser.LogoImage" />
+            <img class="img-profile rounded-circle" style="width:40px; height:40px;" src="~/LogoImage/@currentUser.LogoImage" />
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
         </li>
     }
     else

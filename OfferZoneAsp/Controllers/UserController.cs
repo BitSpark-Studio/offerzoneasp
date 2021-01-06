@@ -9,6 +9,7 @@ using OfferZoneAsp.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Dynamic;
 
 namespace OfferZoneAsp.Controllers
 {
@@ -37,7 +38,14 @@ namespace OfferZoneAsp.Controllers
         {
             return View();
         }
-
+        public async Task<IActionResult> Profile()
+        {
+            var currentUser = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            dynamic mymodel = new ExpandoObject();
+            mymodel.recentTwoOffers = context.Offers.Where(x => x.UserId == currentUser.Id).OrderByDescending(x => x.CreatedAt).Take(2);
+            mymodel.UserInfo= await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return View(mymodel);
+        }
         
         public IActionResult Login()
         {
@@ -276,6 +284,18 @@ namespace OfferZoneAsp.Controllers
             }
 
             return View(model);
+        }
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            await signInManager.SignOutAsync();
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
     }
 

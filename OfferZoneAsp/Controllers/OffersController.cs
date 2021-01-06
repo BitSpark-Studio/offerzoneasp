@@ -33,6 +33,7 @@ namespace OfferZoneAsp.Controllers
         {
             return View(await _context.Offers.ToListAsync());
         }
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -61,9 +62,9 @@ namespace OfferZoneAsp.Controllers
                     ExpiredAt=model.ExpiredAt,
                     FbLink = model.FbLink,
                     InstagramLink=model.InstagramLink,
-                    WebsiteLink=model.WebsiteLink
+                    WebsiteLink=model.WebsiteLink,
                     //CategoryId = model.CategoryId,
-                    //UserId = currentUser.Id
+                    UserId = currentUser.Id
                     
                 };
                 _context.Add(offermodel);
@@ -72,6 +73,7 @@ namespace OfferZoneAsp.Controllers
             }
             return View(model);
         }
+        [HttpGet]
         // GET: Labs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -95,23 +97,28 @@ namespace OfferZoneAsp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title, Description, Price,Location,ExpiredAt,FbLink,InstagramLink,ContactNumber")] Offer offer)
+        public async Task<IActionResult> Edit(int id, [Bind("Title, Description, Price,Location,ExpiredAt,FbLink,InstagramLink,ContactNumber")] Offer model)
         {
-            if (id != offer.OfferId)
-            {
-                return NotFound();
-            }
+            var data = _context.Offers.Where(x => x.OfferId == id).FirstOrDefault();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(offer);
+                    data.Title = model.Title;
+                    data.Description = model.Description;
+                    data.Price = model.Price;
+                    data.Location = model.Location;
+                    data.ExpiredAt = model.ExpiredAt;
+                    data.FbLink = model.FbLink;
+                    data.InstagramLink = model.InstagramLink;
+                    data.ContactNumber = model.ContactNumber;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OfferExists(offer.OfferId))
+                    if (!OfferExists(model.OfferId))
                     {
                         return NotFound();
                     }
@@ -122,7 +129,7 @@ namespace OfferZoneAsp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(offer);
+            return View(model);
         }
 
         // GET: Offer/Details/1

@@ -14,6 +14,5 @@ namespace OfferZoneAsp.Models
         public double Ratings { get; set; }
         public int OfferId { get; set; }
         public string UserId { get; set; }
-
     }
 }
