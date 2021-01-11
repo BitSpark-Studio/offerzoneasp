@@ -130,3 +130,24 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Generate Report.</h5>
+                <p class="card-text">
+                    Click to button to get report.
+                </p>
+                @{Html.BeginForm("GenerateReport", "Home", FormMethod.Get);
+                    {
+                        <div>
+                            <input type="submit" value="Create Report" class="btn btn-dark" />
+                        </div>
+                    }
+                    Html.EndForm();
+                }
+            </div>
+        </div>
+    </div>
+    
+</div>

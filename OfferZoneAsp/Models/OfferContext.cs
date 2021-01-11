@@ -16,6 +16,7 @@ namespace OfferZoneAsp.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<SocialLink> SocialLinks { get; set; }
-
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<OfferType> OfferTypes { get; set; }
     }
 }

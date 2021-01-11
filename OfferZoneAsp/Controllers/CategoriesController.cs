@@ -136,6 +136,11 @@ namespace OfferZoneAsp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> OpenOffer(int id)
+        {
+            ViewData["Offers"] = await _context.Offers.Where(x => x.CategoryId == id).ToListAsync();
+            return View();
+        }
 
         private bool LabExists(int id)
         {

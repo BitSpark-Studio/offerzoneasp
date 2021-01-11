@@ -18,6 +18,8 @@ namespace OfferZoneAsp.Shared
         public string Description { get; set; }
         [Display(Name = "Offer Price")]
         public string Price { get; set; }
+        [Display(Name = "Discounted Price")]
+        public string DiscountedPrice { get; set; }
         [Required]
         [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
@@ -44,9 +46,10 @@ namespace OfferZoneAsp.Shared
         public string WebsiteLink { get; set; }
 
 
-        [Display(Name = "Category Id")]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
      
         public string UserId { get; set; }
+        public int OfferTypeId { get; set; }
     }
 }

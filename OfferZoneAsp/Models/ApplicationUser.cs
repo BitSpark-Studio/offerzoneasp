@@ -10,5 +10,6 @@ namespace OfferZoneAsp.Models
         public string CompanyName { get; set; }
         public string LogoImage { get; set; }
         public string UserType { get; set; }
+        public string UserRole { get; set; }
     }
 }

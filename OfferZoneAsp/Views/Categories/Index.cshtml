@@ -19,7 +19,7 @@
                     <img src="https://cdn0.iconfinder.com/data/icons/category-of-words-and-phrases/128/All-512.png" class="card-img-top img-fluid" alt="Alternate Text" />
                     <div class="card-body">
                         <h5 class="card-title">@item.Title</h5>
-                        <a href="#" class="btn btn-primary">View Offers</a>
+                        <a asp-action="OpenOffer" asp-route-id="@item.CategoryId" class="btn btn-primary">View Offers</a>
                     </div>
                 </div>
                 <br />

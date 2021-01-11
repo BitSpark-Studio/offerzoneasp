@@ -29,6 +29,8 @@
     <PackageReference Include="Npgsql" Version="4.1.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.QtWebKit.Net.Core" Version="18.4.0.30" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="18.4.0.33" />
   </ItemGroup>
 
     <ItemGroup>

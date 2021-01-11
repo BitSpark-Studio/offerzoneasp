@@ -44,7 +44,8 @@ namespace OfferZoneAsp.Migrations
                     Address = table.Column<string>(nullable: true),
                     CompanyName = table.Column<string>(nullable: true),
                     LogoImage = table.Column<string>(nullable: true),
-                    UserType = table.Column<string>(nullable: true)
+                    UserType = table.Column<string>(nullable: true),
+                    UserRole = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,6 +64,20 @@ namespace OfferZoneAsp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(nullable: false),
+                    CommentText = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,11 +100,25 @@ namespace OfferZoneAsp.Migrations
                     WebsiteLink = table.Column<string>(nullable: true),
                     ContactNumber = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true),
+                    OfferTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Offers", x => x.OfferId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OfferTypes",
+                columns: table => new
+                {
+                    OfferTypeId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OfferTypes", x => x.OfferTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,7 +315,13 @@ namespace OfferZoneAsp.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Offers");
+
+            migrationBuilder.DropTable(
+                name: "OfferTypes");
 
             migrationBuilder.DropTable(
                 name: "Ratings");

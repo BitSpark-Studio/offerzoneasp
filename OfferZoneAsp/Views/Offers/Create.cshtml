@@ -1,9 +1,10 @@
-﻿@model OfferZoneAsp.Shared.OfferViewModel
-
+﻿@model OfferZoneAsp.Shared.OfferViewModel;
 @{
     ViewData["Title"] = "Create Offer";
-}
 
+    IEnumerable<Category> Categories = ViewData["Categories"] as IEnumerable<Category>;
+    IEnumerable<OfferType> OfferTypes = ViewData["OfferTypes"] as IEnumerable<OfferType>;
+}
 <h1>Create a new offer</h1>
 <hr />
 <div class="row">
@@ -24,6 +25,11 @@
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountedPrice" class="control-label"></label>
+                <input asp-for="DiscountedPrice" class="form-control" />
+                <span asp-validation-for="DiscountedPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
@@ -54,6 +60,26 @@
                 <label asp-for="WebsiteLink" class="control-label"></label>
                 <input asp-for="WebsiteLink" class="form-control" />
                 <span asp-validation-for="WebsiteLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Category: </label>
+                <select class="form-control" asp-for="CategoryId">
+                    @foreach (Category categories in Categories)
+                    {
+                        <option value="@categories.CategoryId">@categories.Title</option>
+                    }
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label class="control-label">Offer Type: </label>
+                <select class="form-control" asp-for="OfferTypeId">
+                    @foreach (OfferType offerTypes in OfferTypes)
+                    {
+                        <option value="@offerTypes.OfferTypeId">@offerTypes.Title</option>
+                    }
+                </select>
+
             </div>
             <div class="form-group">
                 <label asp-for="ContactNumber" class="control-label"></label>

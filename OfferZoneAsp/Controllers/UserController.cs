@@ -22,7 +22,7 @@ namespace OfferZoneAsp.Controllers
         private readonly OfferContext context;
         readonly string vendor = "vendor";
         readonly string admin = "admin";
-        readonly string gUser = "admin";
+        readonly string gUser = "buyer";
 
 
         public UserController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, RoleManager<ApplicationRole> _roleManager, OfferContext _context, IWebHostEnvironment _hostingEnvironment)
@@ -51,7 +51,7 @@ namespace OfferZoneAsp.Controllers
         {
             if (signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("index", "home");
+                return RedirectToAction("profile", "user");
             }
             return View();
         }
@@ -69,7 +69,7 @@ namespace OfferZoneAsp.Controllers
                         return Redirect(ReturnUrl);
                     }
                     // Login is successful here, so we return now and the execution stops, meaning the bottom code never runs.
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("profile", "user");
                 }
             }
 
@@ -81,7 +81,7 @@ namespace OfferZoneAsp.Controllers
         {
             if (signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("index", "home");
+                return RedirectToAction("profile", "user");
             }
             return View();
         }
@@ -110,7 +110,8 @@ namespace OfferZoneAsp.Controllers
                     PhoneNumber = model.PhoneNumber,
                     UserName = model.Email,
                     Address = model.Address,
-                    LogoImage = UniqueFileName
+                    LogoImage = UniqueFileName,
+                    UserRole = vendor
                 };
 
 
@@ -139,7 +140,7 @@ namespace OfferZoneAsp.Controllers
                     {
                         return Redirect(ReturnUrl);
                     }
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("profile", "user");
                 }
 
                 // If there are any errors, add them to the ModelState object
@@ -173,7 +174,8 @@ namespace OfferZoneAsp.Controllers
                     PhoneNumber = model.PhoneNumber,
                     UserName = model.Email,
                     Address = model.Address,
-                    LogoImage = UniqueFileName
+                    LogoImage = UniqueFileName,
+                    UserRole = gUser
                 };
 
 
@@ -202,7 +204,7 @@ namespace OfferZoneAsp.Controllers
                     {
                         return Redirect(ReturnUrl);
                     }
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("profile", "user");
                 }
 
                 // If there are any errors, add them to the ModelState object
@@ -223,6 +225,7 @@ namespace OfferZoneAsp.Controllers
             }
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> RegisterAdmin(AdminRegistrationViewModel model, string ReturnUrl)
         {
             //TODO: Make user registration 
@@ -243,7 +246,8 @@ namespace OfferZoneAsp.Controllers
                     PhoneNumber = model.PhoneNumber,
                     UserName = model.Email,
                     Address = model.Address,
-                    LogoImage = UniqueFileName
+                    LogoImage = UniqueFileName,
+                    UserRole = admin
                 };
 
 
@@ -272,7 +276,7 @@ namespace OfferZoneAsp.Controllers
                     {
                         return Redirect(ReturnUrl);
                     }
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("profile", "user");
                 }
 
                 // If there are any errors, add them to the ModelState object

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -34,8 +35,10 @@ namespace OfferZoneAsp.Controllers
             return View(await _context.Offers.ToListAsync());
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["Categories"] = await _context.Categories.ToListAsync();
+            ViewData["OfferTypes"] = await _context.OfferTypes.ToListAsync();
             return View();
         }
         [HttpPost]
@@ -55,6 +58,7 @@ namespace OfferZoneAsp.Controllers
                     Title = model.Title,
                     Description = model.Description,
                     Price = model.Price,
+                    DiscountedPrice = model.DiscountedPrice,
                     ContactNumber = model.ContactNumber,
                     Location = model.Location,
                     OfferImageName = UniqueFileName,
@@ -63,8 +67,10 @@ namespace OfferZoneAsp.Controllers
                     FbLink = model.FbLink,
                     InstagramLink=model.InstagramLink,
                     WebsiteLink=model.WebsiteLink,
-                    //CategoryId = model.CategoryId,
-                    UserId = currentUser.Id
+                    CategoryId = model.CategoryId,
+                    UserId = currentUser.Id,
+                    OfferTypeId = model.OfferTypeId
+                    
                     
                 };
                 _context.Add(offermodel);
@@ -97,7 +103,7 @@ namespace OfferZoneAsp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title, Description, Price,Location,ExpiredAt,FbLink,InstagramLink,ContactNumber")] Offer model)
+        public async Task<IActionResult> Edit(int id, [Bind("Title, Description, Price,DiscountedPrice,Location,ExpiredAt,FbLink,InstagramLink,ContactNumber")] Offer model)
         {
             var data = _context.Offers.Where(x => x.OfferId == id).FirstOrDefault();
 
@@ -108,6 +114,7 @@ namespace OfferZoneAsp.Controllers
                     data.Title = model.Title;
                     data.Description = model.Description;
                     data.Price = model.Price;
+                    data.DiscountedPrice = model.DiscountedPrice;
                     data.Location = model.Location;
                     data.ExpiredAt = model.ExpiredAt;
                     data.FbLink = model.FbLink;
@@ -135,6 +142,7 @@ namespace OfferZoneAsp.Controllers
         // GET: Offer/Details/1
         public async Task<IActionResult> Details(int? id)
         {
+            
             if (id == null)
             {
                 return NotFound();
@@ -142,12 +150,19 @@ namespace OfferZoneAsp.Controllers
 
             var offer = await _context.Offers
                 .FirstOrDefaultAsync(m => m.OfferId == id);
+            ViewData["CategoryInDetail"] = _context.Categories.Where(x => x.CategoryId == offer.CategoryId).FirstOrDefault();
+            ViewData["OfferTypesInDetail"] = _context.Categories.Where(x => x.CategoryId == offer.OfferTypeId).FirstOrDefault();
+            dynamic mymodel = new ExpandoObject();
+            mymodel.CategoryInDetail = _context.Categories.Where(x => x.CategoryId == offer.CategoryId).FirstOrDefault();
+            mymodel.OfferTypesInDetail = _context.Categories.Where(x => x.CategoryId == offer.OfferTypeId).FirstOrDefault();
+            mymodel.offer = await _context.Offers.FirstOrDefaultAsync(m => m.OfferId == id);
+            mymodel.ApplicationUsers = _context.ApplicationUsers.Where(x => x.Id == offer.UserId).FirstOrDefault();
             if (offer == null)
             {
                 return NotFound();
             }
 
-            return View(offer);
+            return View(mymodel);
         }
 
 

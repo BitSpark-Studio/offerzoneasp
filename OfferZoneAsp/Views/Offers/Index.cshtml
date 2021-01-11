@@ -1,15 +1,29 @@
 ﻿@model IEnumerable<OfferZoneAsp.Models.Offer>
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
+    var currentUser = await UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    // var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
     ViewData["Title"] = "All Offers";
 }
 <br />
 <br />
 <h1>All Offers</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User))
+{
+
+    var adminRole = await UserManager.GetUsersInRoleAsync("admin");
+    var vendorRole = await UserManager.GetUsersInRoleAsync("vendor");
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+}
+
 <div class="row">
     @foreach (var item in Model)
     {
@@ -29,9 +43,16 @@
                     <!-- Title -->
                     <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h4>
                     <!-- Button -->
-                    <a asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+
+                        @*var adminRole = await UserManager.GetUsersInRoleAsync("admin");
+                        var vendorRole = await UserManager.GetUsersInRoleAsync("vendor");
+                            <a asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>*@
+
+                    }
                     <a asp-action="Details" asp-route-id="@item.OfferId" class="btn btn-dark">Detail</a>
-                    <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>
 
 
                 </div>

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OfferZoneAsp.Models;
 
 namespace OfferZoneAsp.Migrations
 {
     [DbContext(typeof(OfferContext))]
-    partial class OfferContextModelSnapshot : ModelSnapshot
+    [Migration("20210111145708_db2")]
+    partial class db2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -283,9 +285,6 @@ namespace OfferZoneAsp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DiscountedPrice")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ExpiredAt")

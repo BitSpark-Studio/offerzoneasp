@@ -9,7 +9,7 @@ using OfferZoneAsp.Models;
 namespace OfferZoneAsp.Migrations
 {
     [DbContext(typeof(OfferContext))]
-    [Migration("20201208095457_db1")]
+    [Migration("20210111113008_db1")]
     partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,6 +214,9 @@ namespace OfferZoneAsp.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
+                    b.Property<string>("UserRole")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserType")
                         .HasColumnType("TEXT");
 
@@ -244,6 +247,23 @@ namespace OfferZoneAsp.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("OfferZoneAsp.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CommentText")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CommentId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("OfferZoneAsp.Models.Offer", b =>
@@ -279,6 +299,9 @@ namespace OfferZoneAsp.Migrations
                     b.Property<string>("OfferImageName")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("OfferTypeId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Price")
                         .HasColumnType("TEXT");
 
@@ -300,6 +323,20 @@ namespace OfferZoneAsp.Migrations
                     b.HasKey("OfferId");
 
                     b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("OfferZoneAsp.Models.OfferType", b =>
+                {
+                    b.Property<int>("OfferTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OfferTypeId");
+
+                    b.ToTable("OfferTypes");
                 });
 
             modelBuilder.Entity("OfferZoneAsp.Models.Rating", b =>
