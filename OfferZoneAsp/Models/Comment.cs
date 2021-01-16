@@ -8,10 +8,8 @@ namespace OfferZoneAsp.Models
     public class Comment
     {
         public int CommentId{ get; set; }
-        public int UserId{ get; set; }
+        public string UserId{ get; set; }
         public int OfferId { get; set; }
         public string CommentText { get; set; }
-
-
     }
 }

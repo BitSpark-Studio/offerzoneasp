@@ -11,7 +11,7 @@ namespace OfferZoneAsp.Models
     {
         [Key]
         public int RatingId { get; set; }
-        public double Ratings { get; set; }
+        public int Ratings { get; set; }
         public int OfferId { get; set; }
         public string UserId { get; set; }
     }

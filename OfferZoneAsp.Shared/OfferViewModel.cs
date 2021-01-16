@@ -44,12 +44,17 @@ namespace OfferZoneAsp.Shared
         public string TwitterLink { get; set; }
         [Display(Name = "Website Link")]
         public string WebsiteLink { get; set; }
-
+        [Display(Name = "Comment")]
+        public string Comment { get; set; }
 
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
      
         public string UserId { get; set; }
+
         public int OfferTypeId { get; set; }
+
+        public int Ratings { get; set; }
+
     }
 }

@@ -148,21 +148,37 @@ namespace OfferZoneAsp.Controllers
                 return NotFound();
             }
 
-            var offer = await _context.Offers
-                .FirstOrDefaultAsync(m => m.OfferId == id);
+            CommentRatingViewModel CRVM = new CommentRatingViewModel();
+            CRVM.ListOfComments = new List<CommentStruct>();
+            var offer = await _context.Offers.FirstOrDefaultAsync(m => m.OfferId == id);
             ViewData["CategoryInDetail"] = _context.Categories.Where(x => x.CategoryId == offer.CategoryId).FirstOrDefault();
             ViewData["OfferTypesInDetail"] = _context.Categories.Where(x => x.CategoryId == offer.OfferTypeId).FirstOrDefault();
-            dynamic mymodel = new ExpandoObject();
-            mymodel.CategoryInDetail = _context.Categories.Where(x => x.CategoryId == offer.CategoryId).FirstOrDefault();
-            mymodel.OfferTypesInDetail = _context.Categories.Where(x => x.CategoryId == offer.OfferTypeId).FirstOrDefault();
-            mymodel.offer = await _context.Offers.FirstOrDefaultAsync(m => m.OfferId == id);
-            mymodel.ApplicationUsers = _context.ApplicationUsers.Where(x => x.Id == offer.UserId).FirstOrDefault();
+            ViewData["CurrentOffer"] = _context.Offers.Where(m => m.OfferId == id).FirstOrDefault();
+            ViewData["OfferOwner"] = _context.ApplicationUsers.Where(x => x.Id == offer.UserId).FirstOrDefault();
+            var UserCommentData = await _context.Comments.Where(m => m.OfferId == offer.OfferId).ToListAsync();
+            
+            foreach (var item in UserCommentData)
+            {
+                var ABC = new CommentStruct
+                {
+                    UserId = item.UserId,
+                    OfferId = item.OfferId,
+                    Comment = item.CommentText
+                };
+                CRVM.ListOfComments.Add(ABC);
+            }
+
+            //dynamic mymodel = new ExpandoObject();
+            //mymodel.CategoryInDetail = _context.Categories.Where(x => x.CategoryId == offer.CategoryId).FirstOrDefault();
+            //mymodel.OfferTypesInDetail = _context.Categories.Where(x => x.CategoryId == offer.OfferTypeId).FirstOrDefault();
+            //mymodel.offer = await _context.Offers.FirstOrDefaultAsync(m => m.OfferId == id);
+            //mymodel.OfferOwner = _context.ApplicationUsers.Where(x => x.Id == offer.UserId).FirstOrDefault();
             if (offer == null)
             {
                 return NotFound();
             }
 
-            return View(mymodel);
+            return View(CRVM);
         }
 
 
@@ -192,6 +208,36 @@ namespace OfferZoneAsp.Controllers
             _context.Offers.Remove(offer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(CommentRatingViewModel model)
+        {
+            var currentUser = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (ModelState.IsValid)
+            {
+                var comment = new Comment
+                {
+                    CommentText = model.CommentText,
+                    UserId = currentUser.Id,
+                    OfferId = model.OfferId
+                };
+                _context.Add(comment);
+                await _context.SaveChangesAsync();
+
+                var rating = new Rating
+                {
+                    Ratings = model.Ratings,
+                    OfferId = model.OfferId,
+                    UserId = model.UserId
+                };
+                _context.Add(rating);
+                await _context.SaveChangesAsync();
+                return Redirect("https://localhost:5001/Offers/Details/"+model.OfferId);
+            }
+            return View(model);
         }
 
     }

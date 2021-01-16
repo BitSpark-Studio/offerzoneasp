@@ -53,6 +53,7 @@ namespace OfferZoneAsp.Controllers
             {
                
                 dynamic mymodel = new ExpandoObject();
+                //linq
                 mymodel.Offers = await _context.Offers.ToListAsync();
                 mymodel.Categories = await _context.Categories.ToListAsync();
                 mymodel.Ratings = await _context.Ratings .ToListAsync();
