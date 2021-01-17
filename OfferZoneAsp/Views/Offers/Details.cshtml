@@ -11,7 +11,9 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
+
     var currentUser = await UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
     // var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
     Category Categories = ViewData["CategoryInDetail"] as Category;
     OfferType OfferTypes = ViewData["OfferTypesInDetail"] as OfferType;
@@ -54,16 +56,16 @@
 
         <div class="col-md-6">
 
-            <h5>@CurrentOffer.Title</h5>
-            <p class="mb-2 text-muted text-uppercase small">@Categories.Title</p>
+            <h2>@CurrentOffer.Title</h2>
+            <p class="mb-2 small badge bg-dark">@OfferTypes.Title</p>
+            <p class="mb-2 small badge bg-primary">@Categories.Title</p>
 
 
 
             <p><span class="mr-1"><strong><del>TK. @CurrentOffer.Price</del></strong></span></p>
             <p><span class="mr-1"><strong>TK. @CurrentOffer.DiscountedPrice</strong></span></p>
             <p class="pt-1">
-
-                @CurrentOffer.Description
+                Description: @CurrentOffer.Description
             </p>
             <div class="table-responsive">
                 <table class="table table-sm table-borderless mb-0">
@@ -111,8 +113,8 @@
                         <tr>
                             <th class="pl-0 w-25" scope="row"><strong>Posted By: </strong></th>
                             <td>
-                            <img src="~/LogoImage/@OfferOwner.LogoImage" class="rounded-circle" width="50px" height="50px" alt="Alternate Text" />
-                            @OfferOwner.CompanyName
+                                <img src="~/LogoImage/@OfferOwner.LogoImage" class="rounded-circle" width="50px" height="50px" alt="Alternate Text" />
+                                @OfferOwner.CompanyName
                             </td>
                         </tr>
                     </tbody>
@@ -160,7 +162,7 @@
                 </div>
                 <br />
                 <input type="hidden" asp-for="OfferId" value="@CurrentOffer.OfferId" />
-                <input type="hidden" asp-for="UserId" value="@currentUser.Id" />
+
                 <textarea asp-for="CommentText" rows="4" cols="50" class="form-control" placeholder="Enter Comments here"></textarea>
                 <br />
 

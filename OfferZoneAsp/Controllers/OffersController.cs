@@ -152,7 +152,7 @@ namespace OfferZoneAsp.Controllers
             CRVM.ListOfComments = new List<CommentStruct>();
             var offer = await _context.Offers.FirstOrDefaultAsync(m => m.OfferId == id);
             ViewData["CategoryInDetail"] = _context.Categories.Where(x => x.CategoryId == offer.CategoryId).FirstOrDefault();
-            ViewData["OfferTypesInDetail"] = _context.Categories.Where(x => x.CategoryId == offer.OfferTypeId).FirstOrDefault();
+            ViewData["OfferTypesInDetail"] = _context.OfferTypes.Where(x => x.OfferTypeId == offer.OfferTypeId).FirstOrDefault();
             ViewData["CurrentOffer"] = _context.Offers.Where(m => m.OfferId == id).FirstOrDefault();
             ViewData["OfferOwner"] = _context.ApplicationUsers.Where(x => x.Id == offer.UserId).FirstOrDefault();
             var UserCommentData = await _context.Comments.Where(m => m.OfferId == offer.OfferId).ToListAsync();
@@ -231,7 +231,7 @@ namespace OfferZoneAsp.Controllers
                 {
                     Ratings = model.Ratings,
                     OfferId = model.OfferId,
-                    UserId = model.UserId
+                    UserId = currentUser.Id
                 };
                 _context.Add(rating);
                 await _context.SaveChangesAsync();
