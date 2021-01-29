@@ -19,9 +19,15 @@
 
     var adminRole = await UserManager.GetUsersInRoleAsync("admin");
     var vendorRole = await UserManager.GetUsersInRoleAsync("vendor");
-    <p>
-        <a asp-action="Create" class="btn btn-success">Create New</a>
-    </p>
+    if (currentUser != null)
+    {
+        if (currentUser.UserRole == "vendor" || currentUser.UserRole == "admin")
+        {
+            <p>
+                <a asp-action="Create" class="btn btn-success">Create New</a>
+            </p>
+        }
+    }
 }
 
 <div class="row">
@@ -43,15 +49,17 @@
                     <!-- Title -->
                     <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h4>
                     <!-- Button -->
-                    @if (SignInManager.IsSignedIn(User))
+                    @if (currentUser != null)
                     {
+                        @if (currentUser.UserRole == "admin")
+                        {
 
-                        @*var adminRole = await UserManager.GetUsersInRoleAsync("admin");
-                        var vendorRole = await UserManager.GetUsersInRoleAsync("vendor");
                             <a asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>*@
+                            <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>
 
+                        }
                     }
+
                     <a asp-action="Details" asp-route-id="@item.OfferId" class="btn btn-dark">Detail</a>
 
 

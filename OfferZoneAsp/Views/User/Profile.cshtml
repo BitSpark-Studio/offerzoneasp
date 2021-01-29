@@ -114,7 +114,7 @@
                                                 {
                                                     <tr>
                                                         <td>
-                                                            <a asp-action="Details" asp-route-id="@item.OfferId">@Html.DisplayFor(modelItem => item.Title)</a>
+                                                            <a asp-controller="Offers" asp-action="Details" asp-route-id="@item.OfferId">@Html.DisplayFor(modelItem => item.Title)</a>
                                                         </td>
                                                     </tr>
                                                 }
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="javascript:;" class="btn btn-primary btn-round">Follow</a>
+                        <a asp-controller="Offers" asp-action="MyOffers" asp-route-id="@currentUser.Id">Show all my offers</a>
                     </div>
                 </div>
             </div>

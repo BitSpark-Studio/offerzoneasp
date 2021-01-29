@@ -133,6 +133,10 @@ namespace OfferZoneAsp.Controllers
             return RedirectToAction("Index");
 
         }
+        public IActionResult Unauthorized()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,15 +33,28 @@ namespace OfferZoneAsp.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.Offers.ToListAsync());
         }
+        
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            var currentUser = await userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
             ViewData["Categories"] = await _context.Categories.ToListAsync();
             ViewData["OfferTypes"] = await _context.OfferTypes.ToListAsync();
-            return View();
+
+            if (currentUser != null)
+            {
+                if (currentUser.UserRole == "vendor" || currentUser.UserRole == "admin")
+                {
+                    return View();
+                }
+            }
+            return Redirect("https://localhost:5001/unauthorized");
+
         }
+        
         [HttpPost]
         public async Task<IActionResult> Create(OfferViewModel model)
         {
@@ -138,11 +152,21 @@ namespace OfferZoneAsp.Controllers
             }
             return View(model);
         }
-
-        // GET: Offer/Details/1
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> MyOffers(string id)
         {
             
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["OfferOwner"] = await _context.Offers.Where(x => x.UserId == id).ToListAsync(); 
+
+            return View();
+        }
+        public async Task<IActionResult> Details(int? id)
+        {
+
             if (id == null)
             {
                 return NotFound();
@@ -156,7 +180,7 @@ namespace OfferZoneAsp.Controllers
             ViewData["CurrentOffer"] = _context.Offers.Where(m => m.OfferId == id).FirstOrDefault();
             ViewData["OfferOwner"] = _context.ApplicationUsers.Where(x => x.Id == offer.UserId).FirstOrDefault();
             var UserCommentData = await _context.Comments.Where(m => m.OfferId == offer.OfferId).ToListAsync();
-            
+
             foreach (var item in UserCommentData)
             {
                 var ABC = new CommentStruct
@@ -180,6 +204,7 @@ namespace OfferZoneAsp.Controllers
 
             return View(CRVM);
         }
+
 
 
         // GET: offers/Delete/5

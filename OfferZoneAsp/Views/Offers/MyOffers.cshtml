@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using System.Linq
+@using System.IO;
+@using System.Linq;
+@using System.Security.Claims;
+@using System.Threading.Tasks;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var currentUser = await UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    IEnumerable<Offer> CurrentOffer = ViewData["OfferOwner"] as IEnumerable<Offer>;
+}
+@{
+    ViewData["Title"] = "My Offers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<h1>MyOffers</h1>
+
+<div class="row">
+    @foreach (Offer item in CurrentOffer)
+    {
+        <div class="col-md-4">
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Card image -->
+                <div class="view overlay">
+                    <img class="card-img-top img-fluid" style="width:500px; height:500px;" src="~/OfferImages/@item.OfferImageName"
+                         alt="Card image cap">
+                </div>
+
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+                    <h4 class="card-title"> @item.Title</h4>
+                    <!-- Button -->
+
+                    <a asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>
+
+                    <a asp-action="Details" asp-route-id="@item.OfferId" class="btn btn-dark">Detail</a>
+
+
+                </div>
+
+            </div>
+            <!-- Card -->
+        </div>
+    }
+</div>

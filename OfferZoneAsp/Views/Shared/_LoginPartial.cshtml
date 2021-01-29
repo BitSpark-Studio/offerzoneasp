@@ -13,7 +13,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            @User.Identity.Name
+            <a class="btn-link" asp-controller="user" asp-action="profile">@User.Identity.Name</a>
         </li>
         <li class="nav-item">
             <img class="img-profile rounded-circle" style="width:40px; height:40px;" src="~/LogoImage/@currentUser.LogoImage" />

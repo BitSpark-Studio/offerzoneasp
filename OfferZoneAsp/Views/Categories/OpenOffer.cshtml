@@ -24,11 +24,9 @@
                     <!-- Title -->
                     <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h4>
                     <!-- Button -->
-                    <a asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.OfferId" class="btn btn-dark">Detail</a>
-                    <a asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>
-
-
+                    <a asp-controller="Offers" asp-action="Edit" asp-route-id="@item.OfferId" class="btn btn-primary">Edit</a>
+                    <a asp-controller="Offers" asp-action="Details" asp-route-id="@item.OfferId" class="btn btn-dark">Detail</a>
+                    <a asp-controller="Offers" asp-action="Delete" asp-route-id="@item.OfferId" class="btn btn-danger">Delete</a>
                 </div>
 
             </div>
